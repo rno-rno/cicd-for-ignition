@@ -14,7 +14,6 @@ on:
       - "labs/03-github-actions/rule_config.json"
       - "labs/03-github-actions/.config/**"
       - "labs/03-github-actions/.github/**"
-      - "labs/03-github-actions/.github/bla**"
   push:
     branches: [main]
     paths:
