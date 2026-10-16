@@ -14,7 +14,6 @@
           "name": "HeaderLabel"
         },
         "position": {
-          "grow": 0,
           "shrink": 0
         },
         "props": {
@@ -23,24 +22,11 @@
             "fontWeight": 700,
             "padding": "16px"
           },
-          "text": "Packaging Site Overview"
+          "text": "Packaging Site Overview hallo van test"
         },
         "type": "ia.display.label"
       },
       {
-        "meta": {
-          "name": "StatusCard"
-        },
-        "position": {
-          "grow": 1,
-          "shrink": 1
-        },
-        "props": {
-          "style": {
-            "margin": "16px"
-          }
-        },
-        "type": "ia.container.flex",
         "children": [
           {
             "meta": {
@@ -51,7 +37,19 @@
             },
             "type": "ia.display.label"
           }
-        ]
+        ],
+        "meta": {
+          "name": "StatusCard"
+        },
+        "position": {
+          "grow": 1
+        },
+        "props": {
+          "style": {
+            "margin": "16px"
+          }
+        },
+        "type": "ia.container.flex"
       }
     ],
     "meta": {
