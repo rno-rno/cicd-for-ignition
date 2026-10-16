@@ -1,0 +1,85 @@
+name: Lab 03 · CI
+
+# Monorepo scoping: only changes to this lab (or this workflow) trigger it.
+# TODO (step 1): narrow `paths:` so docs-only PRs are skipped, plus a
+# `push: branches: [main]` backstop. See the assignment.
+on:
+  pull_request:
+    paths:
+      - "labs/03-github-actions/projects/**"
+      - "labs/03-github-actions/scripts/**"
+      - "labs/03-github-actions/docker-compose.yml"
+      - ".github/workflows/lab03-*.yml"
+      - "labs/03-github-actions/.yamllint.yml"
+      - "labs/03-github-actions/rule_config.json"
+      - "labs/03-github-actions/.config/**"
+      - "labs/03-github-actions/.github/**"
+  push:
+    branches: [main]
+    paths:
+      - "labs/03-github-actions/**"
+      - ".github/workflows/lab03-*.yml"
+
+# Least-privilege default; individual jobs override if they need more.
+permissions:
+  contents: read
+
+# Every `run:` step starts in the lab folder, as if you'd cd'd there yourself.
+defaults:
+  run:
+    working-directory: labs/03-github-actions
+
+jobs:
+  # Job ids become the status-check names branch protection matches on:
+  # keep `lint` and `validate` stable (renaming them orphans the required checks).
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install Python tools
+        run: pip install yamllint==1.35.1 ign-lint==0.6.1
+
+      - name: yamllint
+        run: yamllint -c .yamllint.yml . ../../.github/workflows/lab03-*.yml
+
+      - name: actionlint
+        uses: raven-actions/actionlint@v2
+        with:
+          # Only this lab's workflows, with this lab's config (the
+          # `local-lab03` runner label). Paths are repo-root-relative.
+          files: ".github/workflows/lab03-*.yml"
+          flags: "-config-file labs/03-github-actions/.github/actionlint.yaml"
+
+      - name: Install shellcheck
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends shellcheck
+
+      - name: shellcheck
+        run: shellcheck scripts/*.sh
+
+      - name: ignition-lint (Perspective views)
+        # From the repo root, like the pre-commit hook: rule_config.json
+        # names its pylint config with a repo-root-relative path.
+        working-directory: .
+        run: >-
+          ign-lint --config labs/03-github-actions/rule_config.json
+          --files "labs/03-github-actions/projects/**/view.json"
+
+      - name: docker compose config
+        run: docker compose config -q
+
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      # TODO (step 0): run scripts/validate.sh
+      - name: Validate project files
+        # Gateway-free green/red signal: every project *.json is valid JSON and
+        # every code.py parses as Python 3. The same check you run locally.
+        run: scripts/validate.sh
