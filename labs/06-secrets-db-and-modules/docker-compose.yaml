@@ -70,6 +70,9 @@ x-ignition-env: &ignition-env
     com.inductiveautomation.webdev,
     com.inductiveautomation.jdbc.postgresql,
     dev.bwdesigngroup.flint.FlintDesignerBridge,
+    com.mussonindustrial.embr.periscope,
+    com.mussonindustrial.embr.charts,
+    com.mustry.historian.timescaledb,
     project-scan-endpoint
   # Embr-Periscope, Embr-Charts and the TimescaleDB Historian are the three
   # spare modules Part 3 installs. Their .modl files sit in
@@ -85,9 +88,15 @@ x-ignition-env: &ignition-env
   # derivation is the whole point of Part 3.
   ACCEPT_MODULE_LICENSES: >-
     dev.bwdesigngroup.flint.FlintDesignerBridge,
+    com.mussonindustrial.embr.periscope,
+    com.mussonindustrial.embr.charts,
+    com.mustry.historian.timescaledb,
     project-scan-endpoint
   ACCEPT_MODULE_CERTS: >-
     dev.bwdesigngroup.flint.FlintDesignerBridge,
+    com.mussonindustrial.embr.periscope,
+    com.mussonindustrial.embr.charts,
+    com.mustry.historian.timescaledb,
     project-scan-endpoint
   GATEWAY_RESTORE_DISABLED: "true"
   GATEWAY_NETWORK_ENABLED: "true"
