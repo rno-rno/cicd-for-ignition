@@ -264,7 +264,7 @@ jobs:
               done < <(find . -name "$pat" -print0 2>/dev/null)
             fi
           done < .deployignore
-          
+
       - name: Migrate database
         run: |
           case "$DEPLOY_TARGET" in
