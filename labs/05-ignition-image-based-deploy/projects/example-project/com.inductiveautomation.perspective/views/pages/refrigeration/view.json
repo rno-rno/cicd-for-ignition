@@ -29,7 +29,7 @@
                   },
                   "instances": [
                     {
-                      "displayName": "CMP-01",
+                      "displayName": "COMPRESSOR-01",
                       "instancePosition": {
                         "basis": "0",
                         "grow": 1,
