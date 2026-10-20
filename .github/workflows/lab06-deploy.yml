@@ -240,7 +240,7 @@ jobs:
             production) db=ignition_production ;;
             *)          db=ignition_test ;;
           esac
-          ./labs/06-secrets-db-and-modules/scripts/migrate.sh up --database "$db"
+          ./scripts/migrate.sh up --database "$db"
 
       - name: Prune working tree per .deployignore
         # Patterns containing a slash → repo-relative path match.
