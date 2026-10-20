@@ -264,6 +264,14 @@ jobs:
               done < <(find . -name "$pat" -print0 2>/dev/null)
             fi
           done < .deployignore
+          
+      - name: Migrate database
+        run: |
+          case "$DEPLOY_TARGET" in
+            production) db=ignition_production ;;
+            *)          db=ignition_test ;;
+          esac
+          ./scripts/migrate.sh up --database "$db"
 
       - name: Ship projects and config into gateway container
         # Wipe-then-copy so a deleted-in-repo resource also disappears from the
