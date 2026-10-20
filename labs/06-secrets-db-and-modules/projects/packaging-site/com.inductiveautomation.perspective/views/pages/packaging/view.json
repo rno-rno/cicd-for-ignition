@@ -9,24 +9,30 @@
   },
   "root": {
     "children": [
-        {
-        "meta": { "name": "DowntimeTable" },
-        "position": { "grow": 1, "shrink": 1 },
+      {
+        "meta": {
+          "name": "DowntimeTable"
+        },
+        "position": {
+          "grow": 1
+        },
         "propConfig": {
           "props.data": {
             "binding": {
               "config": {
-                "database": "TimescaleDB",
-                "fallbackDelay": 2.5,
-                "polling": { "enabled": false },
-                "queryString": "SELECT reason, minutes, area FROM downtime_log ORDER BY id DESC",
+                "mode": "direct",
+                "queryPath": "Query",
                 "returnFormat": "dataset"
               },
               "type": "query"
             }
           }
         },
-        "props": { "style": { "margin": "16px" } },
+        "props": {
+          "style": {
+            "margin": "16px"
+          }
+        },
         "type": "ia.display.table"
       },
       {
@@ -34,7 +40,6 @@
           "name": "HeaderLabel"
         },
         "position": {
-          "grow": 0,
           "shrink": 0
         },
         "props": {
@@ -48,19 +53,6 @@
         "type": "ia.display.label"
       },
       {
-        "meta": {
-          "name": "StatusCard"
-        },
-        "position": {
-          "grow": 1,
-          "shrink": 1
-        },
-        "props": {
-          "style": {
-            "margin": "16px"
-          }
-        },
-        "type": "ia.container.flex",
         "children": [
           {
             "meta": {
@@ -71,7 +63,19 @@
             },
             "type": "ia.display.label"
           }
-        ]
+        ],
+        "meta": {
+          "name": "StatusCard"
+        },
+        "position": {
+          "grow": 1
+        },
+        "props": {
+          "style": {
+            "margin": "16px"
+          }
+        },
+        "type": "ia.container.flex"
       }
     ],
     "meta": {
